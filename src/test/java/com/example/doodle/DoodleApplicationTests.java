@@ -1,10 +1,10 @@
-package com.example.challenge1;
+package com.example.doodle;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class Challenge1ApplicationTests {
+class DoodleApplicationTests {
 
 	@Test
 	void contextLoads() {

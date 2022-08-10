@@ -1,7 +1,7 @@
-package com.example.challenge1.controller;
+package com.example.doodle.controller;
 
-import com.example.challenge1.domain.User;
-import com.example.challenge1.service.UserService;
+import com.example.doodle.domain.User;
+import com.example.doodle.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

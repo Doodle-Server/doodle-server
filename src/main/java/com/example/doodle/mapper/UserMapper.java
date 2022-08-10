@@ -1,8 +1,7 @@
-package com.example.challenge1.mapper;
+package com.example.doodle.mapper;
 
-import com.example.challenge1.domain.User;
+import com.example.doodle.domain.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
 
 @Mapper
 public interface UserMapper {

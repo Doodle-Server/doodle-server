@@ -1,4 +1,4 @@
-package com.example.challenge1.config;
+package com.example.doodle.config;
 
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;

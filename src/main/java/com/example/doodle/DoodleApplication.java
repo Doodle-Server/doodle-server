@@ -1,4 +1,4 @@
-package com.example.challenge1;
+package com.example.doodle;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,12 +6,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"enn.challenge.controller", "enn.challenge.domain", "enn.challenge.mapper","enn.challenge.service" })
+@ComponentScan(basePackages = {"com.example.doodle.controller", "com.example.doodle.domain", "com.example.doodle.mapper","com.example.doodle.service" })
 @EnableJpaRepositories
-public class Challenge1Application {
+public class DoodleApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Challenge1Application.class, args);
+		SpringApplication.run(DoodleApplication.class, args);
 	}
 
 }

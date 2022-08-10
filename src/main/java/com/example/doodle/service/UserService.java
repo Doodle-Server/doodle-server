@@ -1,7 +1,7 @@
-package com.example.challenge1.service;
+package com.example.doodle.service;
 
-import com.example.challenge1.domain.User;
-import com.example.challenge1.mapper.UserMapper;
+import com.example.doodle.domain.User;
+import com.example.doodle.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

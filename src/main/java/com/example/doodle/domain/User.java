@@ -1,4 +1,4 @@
-package com.example.challenge1.domain;
+package com.example.doodle.domain;
 
 import lombok.Getter;
 import lombok.Setter;

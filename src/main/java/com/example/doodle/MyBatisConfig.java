@@ -1,4 +1,4 @@
-package com.example.challenge1;
+package com.example.doodle;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;

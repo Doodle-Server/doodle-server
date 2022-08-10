@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.challenge1.mapper.UserMapper">
+
+    <!-- 회원가입  -->
+    <insert id="signup">
+        INSERT INTO users(username, nickname, email, userid, userpw) VALUES(#{username}, #{nickname},#{email},#{userid},#{userpw} )
+    </insert>
+
+
+    <!--        <resultMap id="userMap" type="com.enn.challenge.domain.User">-->
+    <!--            <result property="userid" column="userid"/>-->
+    <!--            <result property="username" column="username"/>-->
+    <!--            <result property="nickname" column="nickname"/>-->
+    <!--            <result property="email" column="email"/>-->
+    <!--            <result property="userpw" column="userpw"/>-->
+    <!--        </resultMap>-->
+
+    <select id="getUserById" parameterType="String" resultMap="userMap">
+        SELECT * FROM users
+        WHERE userid = #{userid}
+    </select>
+
+    <select id="findAll" resultType="HashMap">
+        select * from users
+    </select>
+
+</mapper>

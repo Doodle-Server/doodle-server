@@ -32,7 +32,7 @@
                         $("#no-id-alert-danger").hide();
                         $("#id-alert-success").show();
                         $("#id-alert-danger").hide();
-                    } else if (data=="1") {
+                    } else if (data=='1') {
                         $("#no-id-alert-danger").hide();
                         $("#id-alert-success").hide();
                         $("#id-alert-danger").show();
@@ -42,7 +42,7 @@
         })
     });
 </script>
-<form action="/save" method="post">
+<form action="" method="post">
     <p>
         <label for="userName">이름</label>
         <input type="text" id="username" name="username"/>
@@ -75,5 +75,6 @@
     <button type="submit">회원가입하기</button>
     <%--    <p><a href="/users/login">로그인하러가기</a></p>--%>
 </form>
+
 </body>
 </html>

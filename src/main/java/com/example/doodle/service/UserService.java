@@ -10,8 +10,8 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public void join(User user) {
-        userMapper.signup(user);
+    public void createUser(User user) {
+        userMapper.createUser(user);
     }
 
     public User getUserById(String userid) {

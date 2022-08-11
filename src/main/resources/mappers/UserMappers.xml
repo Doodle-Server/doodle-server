@@ -5,19 +5,17 @@
 <mapper namespace="com.example.doodle.mapper.UserMapper">
 
     <!-- 회원가입  -->
-    <insert id="signup">
-        INSERT INTO users(username, nickname, email, userid, userpw) VALUES(#{username}, #{nickname},#{email},#{userid},#{userpw} )
+    <insert id="createUser">
+        INSERT INTO users VALUES(#{username},#{nickname},#{email},#{userid},#{userpw})
     </insert>
 
-
-
-    <select id="getUserById" parameterType="String" resultMap="userMap">
-        SELECT * FROM users
-        WHERE userid = #{userid}
+    <select id="getUserById" parameterType="java.lang.String" resultType="User">
+        SELECT * from users
+        WHERE USERID = #{userid}
     </select>
 
-    <select id="findAll" resultType="HashMap">
-        select * from users
+    <select id="findAll" resultType="java.util.HashMap">
+        SELECT * FROM users
     </select>
 
 </mapper>

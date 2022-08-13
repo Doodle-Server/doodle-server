@@ -1,17 +1,21 @@
 package com.example.doodle.controller;
 
 import com.example.doodle.domain.User;
+import com.example.doodle.dto.UserDto;
 import com.example.doodle.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Locale;
 
 
 @Controller
+@Slf4j
 @RequiredArgsConstructor
 public class UserController {
     @Autowired
@@ -19,15 +23,16 @@ public class UserController {
 
 
     @RequestMapping(value = "/users/signup", method = RequestMethod.GET)
-    public String getsignup(Locale locale, Model model) {
+    public ModelAndView getsignup() {
 
-        return "signup";
+        return new ModelAndView("signup");
     }
 
     @RequestMapping(value = "/users/signup", method = RequestMethod.POST)
-    public String postsignup(User user){
+    public String postsignup(@RequestParam User user){
         userService.createUser(user);
-        return "index";
+        log.info(user.getUsername(), user.getUserpw());
+        return "signup";
     }
 
     @GetMapping("getUserById.do")
@@ -36,4 +41,8 @@ public class UserController {
 
         return Integer.toString(userService.checkId(userid));
     }
+
+//    public String login(UserDto user){
+//
+//    };
 }

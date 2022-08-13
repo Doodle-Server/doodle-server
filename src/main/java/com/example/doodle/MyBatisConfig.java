@@ -11,6 +11,8 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 
@@ -31,11 +33,16 @@ public class MyBatisConfig {
 
 
     @Bean(name = "SqlSessionFactory")
-    public SqlSessionFactory SqlSessionFactory(@Qualifier("dataSource") DataSource DataSource, ApplicationContext applicationContext) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(DataSource);
-        sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(mPath));
-        return sqlSessionFactoryBean.getObject();
+    public SqlSessionFactory SqlSessionFactory(DataSource dataSource) throws Exception {
+        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource);
+
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        sessionFactory.setMapperLocations(resolver.getResources("classpath:mappers/*.xml"));
+
+        Resource myBatisConfig = new PathMatchingResourcePatternResolver().getResource("classpath:mybatis-config.xml");
+        sessionFactory.setConfigLocation(myBatisConfig);
+        return sessionFactory.getObject();
     }
 
     @Bean(name = "SessionTemplate")

@@ -3,5 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-
+<!--    <settings>-->
+<!--        <setting name="mapUnderscoreToCamelCase" value="true" />-->
+<!--        <setting name="callSettersOnNulls" value="true"/>-->
+<!--    </settings>-->
 </configuration>

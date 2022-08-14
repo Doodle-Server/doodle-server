@@ -18,4 +18,10 @@
         SELECT * FROM users
     </select>
 
+    <select id="loginCheck" resultType="String">
+        SELECT username
+        FROM users
+        WHERE userid=#{userid} AND userpw=#{userpw}
+    </select>
+
 </mapper>

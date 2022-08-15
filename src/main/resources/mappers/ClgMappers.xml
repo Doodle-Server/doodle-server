@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.doodle.mapper.ClgMapper">
+    <insert id="createClg">
+        INSERT INTO challenges VALUES(#{clgid},#{clgname},#{clgmanagerid},#{clginfo},#{clgmemberno},#{clgterm})
+    </insert>
+    <select id="getClgById">
+        SELECT * FROM challenges
+        WHERE clgid=#{clgid}
+    </select>
+    <select id="findAll" resultType="java.util.HashMap">
+        SELECT * FROM challenges
+    </select>
+    <delete id="deleteClg">
+        delete from challenges where clgid=#{cldid}
+    </delete>
+</mapper>

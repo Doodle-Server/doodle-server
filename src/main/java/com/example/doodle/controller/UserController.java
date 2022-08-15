@@ -1,6 +1,6 @@
 package com.example.doodle.controller;
 
-import com.example.doodle.domain.User;
+
 import com.example.doodle.dto.UserDTO;
 import com.example.doodle.service.UserService;
 import lombok.RequiredArgsConstructor;

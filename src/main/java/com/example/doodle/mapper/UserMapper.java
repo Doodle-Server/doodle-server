@@ -1,6 +1,5 @@
 package com.example.doodle.mapper;
 
-import com.example.doodle.domain.User;
 import com.example.doodle.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 

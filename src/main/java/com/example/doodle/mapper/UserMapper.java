@@ -13,4 +13,7 @@ public interface UserMapper {
     UserDTO getUserById(String userid);
     List<Map<String, Object>> findAll();
     String loginCheck(UserDTO userDTO);
+
+    String findId(String email);
+    int deleteUser(UserDTO userDTO);
 }

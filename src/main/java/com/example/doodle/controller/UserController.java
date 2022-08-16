@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -85,6 +87,31 @@ public class UserController {
         }
         userService.logout(session);
         log.info("로그아웃 성공");
+        return "redirect:/home";
+    }
+
+    // 아이디 찾기 폼으로 이동
+    @RequestMapping(value = "/users/find_id_form")
+    public String find_id_form() throws Exception{
+        return "find_id_form";
+    }
+
+    //아이디 찾기
+    @RequestMapping(value = "/findId", method = RequestMethod.POST)
+    public String findId(HttpServletResponse response, @RequestParam("email") String email, Model md) throws Exception{
+        md.addAttribute("id", userService.findId(response, email));
+        return "redirect:/findId";
+    }
+
+    @GetMapping("/users/deleteUser")
+    public String getDeleteForm(){
+        return "delete_form";
+    }
+    @RequestMapping(value = "/users/deleteUser", method = RequestMethod.POST)
+    public String delete_form(@ModelAttribute UserDTO userDTO, HttpSession session, HttpServletResponse response) throws Exception{
+        if(userService.deleteUser(userDTO, response)) {
+            session.invalidate();
+        }
         return "redirect:/home";
     }
 

@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.PrintWriter;
 
 @Service
 @Slf4j
@@ -38,6 +40,35 @@ public class UserService {
 
         session.invalidate();//세션을 초기화!
 
+    }
+
+    public String findId(HttpServletResponse response, String email) throws Exception {
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        String id = userMapper.findId(email);
+
+        if (id == null) {
+            out.println("alert('가입된 아이디가 없습니다.');");
+            out.close();
+            return null;
+        } else {
+            return id;
+        }
+    }
+
+
+    // 회원탈퇴
+    public boolean deleteUser(UserDTO userDTO, HttpServletResponse response) throws Exception {
+        response.setContentType("text/html;charset=utf-8");
+        PrintWriter out = response.getWriter();
+
+        if(userMapper.deleteUser(userDTO) != 1) {
+            out.println("alert('회원탈퇴 실패');");
+            out.close();
+            return false;
+        } else {
+            return true;
+        }
     }
 }
 

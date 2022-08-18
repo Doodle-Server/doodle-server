@@ -25,15 +25,11 @@ public class UserService {
         return userDTO.getUsername();
     }
 
-    public String loginCheck(UserDTO userDTO, HttpSession session) {
+    public int loginCheck(String userid, String userpw_test) {
 
-        String name = userMapper.loginCheck(userDTO);
-        if (name != null) {
-            session.setAttribute("userid", userDTO.getUserid());
-            session.setAttribute("name",name);
-        } //null리턴..주의
-
-        return name;
+        String userpw = userMapper.getUserpw(userid);
+        int isPassed = userpw.equals(userpw_test)?1:0;
+        return isPassed;
     }
 
     public void logout(HttpSession session){

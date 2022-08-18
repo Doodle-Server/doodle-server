@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,9 +32,7 @@ public class ClgService {
         return  clgDTO.getClgname();
     }
 
-    public ArrayList<UserDTO> findAll(){
-        ArrayList<UserDTO> list =new ArrayList<>();
-        clgMapper.findAll().forEach(e->list.add(e));
-        return list;
+    public List<ClgDTO> getClgAll(String userid){
+        return clgMapper.findAll(userid);
     }
 }

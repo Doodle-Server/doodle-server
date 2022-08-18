@@ -5,6 +5,7 @@ import com.example.doodle.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface ClgMapper {
 
     ClgDTO getClgById(String clgid);
 
-    ArrayList<UserDTO> findAll();
+    List<ClgDTO> findAll(String userid);
 
 
 }

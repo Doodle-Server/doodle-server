@@ -34,4 +34,9 @@
         delete from users where userid = #{userid} and userpw = #{userpw}
     </delete>
 
+<!--아이디에 대응하는 비번 찾기-->
+    <select id="getUserpw">
+        select userpw from users where userid=#{userid}
+    </select>
+
 </mapper>

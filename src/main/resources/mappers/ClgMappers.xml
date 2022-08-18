@@ -3,16 +3,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.doodle.mapper.ClgMapper">
     <insert id="createClg">
-        INSERT INTO challenges(clgid,clgname,clgmanagerid,clginfo,clgmemberno,clgCateId,clgterm) VALUES(#{clgid},#{clgname},#{clgmanagerid},#{clginfo},#{clgmemberno},#{clgCateId},#{clgterm})
+        INSERT INTO challenges(clgid,clgname,clgmanagerid,clginfo,clgmemberno,clgCateId,end_date) VALUES(#{clgid},#{clgname},#{clgmanagerid},#{clginfo},#{clgmemberno},#{clgCateId},#{end_date})
     </insert>
     <select id="getClgById">
         SELECT * FROM challenges
         WHERE clgid=#{clgid}
     </select>
     <select id="findAll" resultType="java.util.HashMap">
-        SELECT * FROM challenges
+        SELECT *
+        FROM challenges as c join clg_members as m
+        on c.clgid = m.clgid
+        where userid=#{userid}
     </select>
     <delete id="deleteClg">
         delete from challenges where clgid=#{cldid}
     </delete>
+
 </mapper>

@@ -16,4 +16,6 @@ public interface UserMapper {
 
     String findId(String email);
     int deleteUser(UserDTO userDTO);
+
+    String getUserpw(String userid);
 }

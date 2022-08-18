@@ -1,8 +1,10 @@
 package com.example.doodle.mapper;
 
 import com.example.doodle.dto.ClgDTO;
+import com.example.doodle.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ public interface ClgMapper {
 
     ClgDTO getClgById(String clgid);
 
-    List<Map<String, Object>> findAll();
+    ArrayList<UserDTO> findAll();
 
 
 }

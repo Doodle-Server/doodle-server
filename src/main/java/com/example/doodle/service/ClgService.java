@@ -31,8 +31,8 @@ public class ClgService {
         return  clgDTO.getClgname();
     }
 
-    public List<Map<String, Object>> findAll(){
-        List<Map<String,Object>> list =new ArrayList<>();
+    public ArrayList<UserDTO> findAll(){
+        ArrayList<UserDTO> list =new ArrayList<>();
         clgMapper.findAll().forEach(e->list.add(e));
         return list;
     }

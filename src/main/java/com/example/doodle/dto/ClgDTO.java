@@ -13,5 +13,6 @@ public class ClgDTO {
     private String clgmanagerid;
     private String clginfo;
     private int clgmemberno;
+    private String clgCateId;
     private Date clgterm;
 }

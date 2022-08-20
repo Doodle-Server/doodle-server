@@ -21,6 +21,9 @@ public class ClgService {
 
     public void createClg(ClgDTO clgDTO){
         clgMapper.createClg(clgDTO);
+        String manager = clgDTO.getClgmanagerid();
+        String challenge = clgDTO.getClgid();
+        clgMapper.includeManager(manager,challenge);
     }
 
     public void deleteClg(String clgid){
@@ -33,6 +36,7 @@ public class ClgService {
     }
 
     public List<ClgDTO> getClgAll(String userid){
+//        log.info(String.valueOf(clgMapper.findAll(userid)));
         return clgMapper.findAll(userid);
     }
 }

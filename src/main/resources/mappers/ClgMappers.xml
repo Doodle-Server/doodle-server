@@ -5,11 +5,14 @@
     <insert id="createClg">
         INSERT INTO challenges(clgid,clgname,clgmanagerid,clginfo,clgmemberno,clgCateId,end_date) VALUES(#{clgid},#{clgname},#{clgmanagerid},#{clginfo},#{clgmemberno},#{clgCateId},#{end_date})
     </insert>
+    <insert id="includeManager">
+        insert into clg_members(userid, clgid) values (#{userid},#{clgid})
+    </insert>
     <select id="getClgById">
         SELECT * FROM challenges
         WHERE clgid=#{clgid}
     </select>
-    <select id="findAll" resultType="java.util.HashMap">
+    <select id="findAll" resultType="com.example.doodle.dto.ClgDTO">
         SELECT *
         FROM challenges as c join clg_members as m
         on c.clgid = m.clgid

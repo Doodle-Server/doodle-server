@@ -13,6 +13,8 @@ import java.util.Map;
 public interface ClgMapper {
     void createClg(ClgDTO clgDTO);
 
+    void includeManager(String userid, String clgid);
+
     void deleteClg(String clgid);
 
     ClgDTO getClgById(String clgid);

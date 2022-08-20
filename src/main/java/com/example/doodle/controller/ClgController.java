@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Controller
+@RestController
 @RequiredArgsConstructor
 
 public class ClgController {
@@ -24,26 +25,25 @@ public class ClgController {
 
 
     @PostMapping("/challenges")
-    public String postChallenge(@RequestBody ClgDTO clgDTO){
+    public void postChallenge(@RequestBody ClgDTO clgDTO){
         clgService.createClg(clgDTO);
 //      log.info(clgDTO.getClgid());
-        return "redirect:/challenges";
 
     }
 
     @DeleteMapping("/challenges/{clgid}")
-    public String deleteChallenge(@PathVariable("clgid") String clgid){
+    public void deleteChallenge(@PathVariable String clgid){
         clgService.deleteClg(clgid);
-        return "redirect:/challenges";
     }
 
 
-    @ResponseBody
-    @GetMapping("/challenges/{userid}")
-    public List<ClgDTO> getDailyChallenges(@PathVariable("userid") String userid){
-        LocalDate currentDate = LocalDate.now();
-        List<ClgDTO> clgAll = clgService.getClgAll(userid)
-                        .stream().filter(e->e.getEnd_date().toInstant().isAfter(Instant.from(currentDate))).collect(Collectors.toList());
+
+    @GetMapping("/challenges/list/{userid}")
+    public List<ClgDTO> getDailyChallenges(@PathVariable String userid){
+        LocalDate localDate = LocalDate.now();
+        Date date = java.sql.Date.valueOf(String.valueOf(localDate));
+        log.info(String.valueOf(clgService.getClgAll(userid)));
+        List<ClgDTO> clgAll = clgService.getClgAll(userid).stream().filter(e->e.getEnd_date().after(date)).collect(Collectors.toList());
 //      log.info(String.valueOf(clgAll));
         return clgAll;
 

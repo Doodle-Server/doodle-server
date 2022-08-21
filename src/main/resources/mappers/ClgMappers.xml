@@ -3,23 +3,39 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.doodle.mapper.ClgMapper">
     <insert id="createClg">
-        INSERT INTO challenges(clgid,clgname,clgmanagerid,clginfo,clgmemberno,clgCateId,end_date) VALUES(#{clgid},#{clgname},#{clgmanagerid},#{clginfo},#{clgmemberno},#{clgCateId},#{end_date})
+        insert into challenges(clgid,clgname,clgmanagerid,clginfo,clgmemberno,clgCateId,end_date) values(#{clgid},#{clgname},#{clgmanagerid},#{clginfo},#{clgmemberno},#{clgCateId},#{end_date})
     </insert>
-    <insert id="includeManager">
+    <insert id="includeMember">
         insert into clg_members(userid, clgid) values (#{userid},#{clgid})
     </insert>
-    <select id="getClgById">
-        SELECT * FROM challenges
-        WHERE clgid=#{clgid}
+    <select id="getClgById" resultType="com.example.doodle.dto.ClgDTO">
+        select * from challenges
+        where clgid=#{clgid}
     </select>
     <select id="findAll" resultType="com.example.doodle.dto.ClgDTO">
-        SELECT *
-        FROM challenges as c join clg_members as m
+        select *
+        from challenges as c join clg_members as m
         on c.clgid = m.clgid
         where userid=#{userid}
     </select>
+    <select id="getClgMembers" resultType="com.example.doodle.dto.UserSimpleDTO">
+        select u.nickname, m.start_date
+        from clg_members as m join users as u
+        on m.userid = u.userid
+        where clgid=#{clgid}
+    </select>
+    <select id="getParticipationRank" resultType="java.util.Ha">
+        select userid, clgid, count(done='true'), count(done='false')
+        from clg_log
+        where clgid=#{clgid}
+        group by userid,clgid
+        order by
+    </select>
     <delete id="deleteClg">
         delete from challenges where clgid=#{cldid}
+    </delete>
+    <delete id="removeMember">
+        delete from clg_members where userid=#{userid} and clgid=#{clgid}
     </delete>
 
 </mapper>

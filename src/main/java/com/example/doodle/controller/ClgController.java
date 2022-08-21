@@ -1,14 +1,14 @@
 package com.example.doodle.controller;
 
 import com.example.doodle.dto.ClgDTO;
+import com.example.doodle.dto.UserSimpleDTO;
 import com.example.doodle.service.ClgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,6 +24,7 @@ public class ClgController {
     ClgService clgService;
 
 
+    //챌린지 생성
     @PostMapping("/challenges")
     public void postChallenge(@RequestBody ClgDTO clgDTO){
         clgService.createClg(clgDTO);
@@ -31,13 +32,20 @@ public class ClgController {
 
     }
 
+    //챌린지 삭제
     @DeleteMapping("/challenges/{clgid}")
     public void deleteChallenge(@PathVariable String clgid){
         clgService.deleteClg(clgid);
     }
 
+    //챌린지 상세내용 조회
+    @GetMapping("/challenges/{clgid}")
+    public ClgDTO getChallengeInfo(@PathVariable String clgid){
+        return clgService.getChallengeInfo(clgid);
 
+    }
 
+    //오늘의 챌린지 조회
     @GetMapping("/challenges/list/{userid}")
     public List<ClgDTO> getDailyChallenges(@PathVariable String userid){
         LocalDate localDate = LocalDate.now();
@@ -48,6 +56,33 @@ public class ClgController {
         return clgAll;
 
     }
+
+    //챌린지 참여
+    @PostMapping("/challenges/{clgid}/member/{userid}")
+    public String joinChallenge(@PathVariable String userid, @PathVariable String clgid){
+        clgService.joinChallenge(userid, clgid);
+        return "멤버 추가";
+    }
+
+    //챌린지 탈퇴
+    @DeleteMapping("challenges/{clgid}/member/{userid}")
+    public String quitChallenge(@PathVariable String userid,@PathVariable String clgid){
+        clgService.quitChallenge(userid, clgid);
+        return "멤버 삭제";
+    }
+
+    //챌린지 참여 인원 조회
+    @GetMapping("challenges/{clgid}/member")
+    public List<UserSimpleDTO> getClgMembers(@PathVariable String clgid){
+        return clgService.getClgMembers(clgid);
+    }
+
+    //챌린지별 참여도 순위 조회
+//    @GetMapping("/challenges/{clgid}/participation")
+//    public HashMap<String,UserSimpleDTO> getParticipationRank(@PathVariable String clgid){
+//
+//    }
+
 
 
 }

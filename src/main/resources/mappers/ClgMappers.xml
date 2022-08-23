@@ -12,6 +12,11 @@
         select * from challenges
         where clgid=#{clgid}
     </select>
+    <select id="findMemberById" resultType="String">
+        select userid
+        from clg_members
+        where clgid=#{clgid} and userid=#{userid}
+    </select>
     <select id="findAll" resultType="com.example.doodle.dto.ClgDTO">
         select *
         from challenges as c join clg_members as m
@@ -19,18 +24,27 @@
         where userid=#{userid}
     </select>
     <select id="getClgMembers" resultType="com.example.doodle.dto.UserSimpleDTO">
-        select u.nickname, m.start_date
+        select u.userid, u.nickname, m.start_date
         from clg_members as m join users as u
         on m.userid = u.userid
         where clgid=#{clgid}
     </select>
-    <select id="getParticipationRank" resultType="java.util.Ha">
-        select userid, clgid, count(done='true'), count(done='false')
+    <select id="getAchieveRate" resultType="com.example.doodle.dto.AcheiveDTO">
+        select  userid,count(case when done=true then 1 end)/ count(done)*100 as achieveRate
         from clg_log
         where clgid=#{clgid}
-        group by userid,clgid
-        order by
+        group by userid, clgid;
     </select>
+    <select id="getClgByCateId" resultType="com.example.doodle.dto.ClgDTO">
+        select *
+        from challenges
+        where clgCateId=#{clgCateId}
+    </select>
+    <update id="modifyClg" parameterType="com.example.doodle.dto.ClgDTO">
+        update challenges
+        set clgname=#{clgname},clgmanagerid=#{clgmanagerid},clginfo=#{clginfo},clgmemberno=#{clgmemberno},clgCateId=#{clgCateId},end_date=#{end_date}
+        where clgid=#{clgid}
+    </update>
     <delete id="deleteClg">
         delete from challenges where clgid=#{cldid}
     </delete>

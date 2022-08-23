@@ -2,6 +2,7 @@ package com.example.doodle.controller;
 
 
 import com.example.doodle.dto.UserDTO;
+import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,7 +56,7 @@ public class UserController {
 
 //        이미 로그인 된 상태면 home으로 redirect
         if(userid==null){
-            return "login";
+            throw new ApiRequestException("이미 로그인 된 상태입니다.");
         }
         else{
             return "redirect:/home";
@@ -73,6 +74,7 @@ public class UserController {
             HttpSession session = request.getSession();
             session.setAttribute("userid", userid);
             mv.setViewName("redirect:/home"); //로그인 성공시 메인화면으로
+            log.info("로그인 성공");
         }
 
         else{

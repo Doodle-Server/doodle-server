@@ -1,6 +1,8 @@
 package com.example.doodle.controller;
 
+import com.example.doodle.dto.AcheiveDTO;
 import com.example.doodle.dto.ClgDTO;
+import com.example.doodle.dto.UserDTO;
 import com.example.doodle.dto.UserSimpleDTO;
 import com.example.doodle.service.ClgService;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +40,12 @@ public class ClgController {
         clgService.deleteClg(clgid);
     }
 
+    //챌린지 수정
+    @PutMapping("challenges/{clgid}")
+    public void modifyChallenge(@PathVariable String clgid, @RequestBody ClgDTO clgDTO){
+        clgService.modifyChallenge(clgDTO);
+    }
+
     //챌린지 상세내용 조회
     @GetMapping("/challenges/{clgid}")
     public ClgDTO getChallengeInfo(@PathVariable String clgid){
@@ -73,15 +81,22 @@ public class ClgController {
 
     //챌린지 참여 인원 조회
     @GetMapping("challenges/{clgid}/member")
-    public List<UserSimpleDTO> getClgMembers(@PathVariable String clgid){
+    public List<UserDTO> getClgMembers(@PathVariable String clgid){
         return clgService.getClgMembers(clgid);
     }
 
-    //챌린지별 참여도 순위 조회
-//    @GetMapping("/challenges/{clgid}/participation")
-//    public HashMap<String,UserSimpleDTO> getParticipationRank(@PathVariable String clgid){
-//
-//    }
+//    챌린지별 참여도 순위 조회
+    @GetMapping("/challenges/{clgid}/participation")
+    public List<AcheiveDTO> getParticipationRank(@PathVariable String clgid){
+        return clgService.getParticipationRank(clgid);
+
+    }
+
+    //카테고리 아이디로 챌린지 조회
+    @GetMapping("/challenges/category/{clgCateId}")
+    public List<ClgDTO> getClgByCateId(@PathVariable String clgCateId){
+        return clgService.getClgByCateId(clgCateId);
+    }
 
 
 

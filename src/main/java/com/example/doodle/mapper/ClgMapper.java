@@ -1,5 +1,6 @@
 package com.example.doodle.mapper;
 
+import com.example.doodle.dto.AcheiveDTO;
 import com.example.doodle.dto.ClgDTO;
 import com.example.doodle.dto.UserDTO;
 import com.example.doodle.dto.UserSimpleDTO;
@@ -15,13 +16,21 @@ public interface ClgMapper {
 
     void deleteClg(String clgid);
 
+    void modifyClg(ClgDTO clgDTO);
+
     ClgDTO getClgById(String clgid);
+
+    String findMemberById(String userid, String clgid);
 
     List<ClgDTO> findAll(String userid);
 
     void removeMember(String userid, String clgid);
 
-    List<UserSimpleDTO> getClgMembers(String clgid);
+    List<UserDTO> getClgMembers(String clgid);
+
+    List<AcheiveDTO> getAchieveRate(String cldid);
+
+    List<ClgDTO> getClgByCateId(String clgCateId);
 
 
 }

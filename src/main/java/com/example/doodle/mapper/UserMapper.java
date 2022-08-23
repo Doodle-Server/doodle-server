@@ -11,6 +11,8 @@ import java.util.Map;
 public interface UserMapper {
     void createUser(UserDTO userDTO);
     UserDTO getUserById(String userid);
+
+    UserDTO getUserByNickname(String nickname);
     List<Map<String, Object>> findAll();
     String loginCheck(UserDTO userDTO);
 

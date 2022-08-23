@@ -26,12 +26,27 @@
 
     <!-- 아이디 찾기 -->
     <select id="findId" parameterType="String" resultType="String">
-        select userid from users where email = #{email}
+        select userid from users
+        where email = #{email}
     </select>
 
-    <!-- 회원탈퇴 -->
+    <!-- 임시 비밀번호 발급 -->
+    <update id="findPw" >
+        update users
+        set userpw=#{userpw}
+        where email = #{email} and userid=#{userid}
+    </update>
+
+    <!-- 비밀번호 유효성 체크 -->
+    <select id="findPwCheck" resultType="int">
+        select count(*) from users
+        where email = #{email} and userid=#{userid}
+    </select>
+
+    <!-- 회원 탈퇴 -->
     <delete id="deleteUser" parameterType="com.example.doodle.dto.UserDTO">
-        delete from users where userid = #{userid} and userpw = #{userpw}
+        delete from users
+        where userid = #{userid} and userpw = #{userpw}
     </delete>
 
 </mapper>

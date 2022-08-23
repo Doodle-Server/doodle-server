@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.util.Random;
 
 @Service
 @Slf4j
@@ -56,6 +57,53 @@ public class UserService {
         }
     }
 
+
+    public int findPwCheck(UserDTO userDTO) throws Exception{
+        return userMapper.findPwCheck(userDTO);
+    }
+
+    private boolean lowerCheck;
+    private int size;
+    private String init(){
+        Random ran = new Random();
+        StringBuffer sb = new StringBuffer();
+        int num = 0;
+
+        do {
+            num = ran.nextInt(75) + 48;
+            if((num >=48 && num <= 57)||(num >=65 && num <=90)||(num >=97 && num <=122)){
+                sb.append((char) num);
+            } else continue;
+        } while (sb.length() < size);
+
+        if(lowerCheck)
+            return sb.toString().toLowerCase();
+
+        return sb.toString();
+    }
+
+    public String getKey(boolean lowerCheck, int size){
+        this.lowerCheck = lowerCheck;
+        this.size = size;
+
+        return init();
+    }
+
+    public String findPw(String email,String userId)throws Exception{
+
+        // 임시 비밀번호는 6자리 발급
+        String tempPw = getKey(false, 6);
+
+        String userPw = tempPw;
+
+        // 비밀번호 암호화해주는 메서드
+        //tempPw = UserSha256.encrypt(tempPw);
+
+        // 데이터 베이스에 저장. (암호화한 값으로 저장?
+        userMapper.findPw(email,userId,tempPw);
+
+        return userPw;
+    }
 
     // 회원탈퇴
     public boolean deleteUser(UserDTO userDTO, HttpServletResponse response) throws Exception {

@@ -3,7 +3,6 @@ package com.example.doodle.mapper;
 import com.example.doodle.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -15,5 +14,7 @@ public interface UserMapper {
     String loginCheck(UserDTO userDTO);
 
     String findId(String email);
+    int findPwCheck(UserDTO userDTO);
+    String findPw(String email,String userid, String userpw);
     int deleteUser(UserDTO userDTO);
 }

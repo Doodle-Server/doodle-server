@@ -1,19 +1,23 @@
 version: "3"
 services:
-  test_database:
+  mysql:
     # 컨테이너 이름을 주고 싶다면 작성한다
     # container_name: test_database
-    image: mysql:5.7
+    image: mysql:8.0.30
     environment:
       MYSQL_DATABASE: test_db
       MYSQL_ROOT_PASSWORD: root
       MYSQL_ROOT_HOST: '%'
     ports:
-      - 3306:3306
+      - "3306:3306"
 
-  test_application:
-    build: .
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    expose:
+      - 8080
     ports:
-      - 8080:8080
+      - "8080:8080"
     depends_on:
-      - test_database
+      - mysql

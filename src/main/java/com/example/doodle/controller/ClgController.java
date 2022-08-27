@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -98,6 +99,18 @@ public class ClgController {
         return clgService.getClgByCateId(clgCateId);
     }
 
+    //챌린지 달성률 조회
+    @GetMapping("/challenges/record/{clgid}")
+    public Float getChallengeRecord(@PathVariable String clgid){
+        return clgService.getChallengeRecord(clgid);
+    }
+
+    //날짜별 챌린지 조회
+    @GetMapping("/challenges/daily/member/{userId}")
+    public List<HashMap<String,String>> getDailyChallenge(@PathVariable String userid, @RequestParam(value = "date", required = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+        return clgService.getDailyChallenge(userid,date);
+    }
 
 
 }

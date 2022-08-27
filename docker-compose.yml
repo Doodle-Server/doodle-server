@@ -5,8 +5,8 @@ services:
     # container_name: test_database
     image: mysql:8.0.30
     environment:
-      MYSQL_DATABASE: database
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: clg_db
+      MYSQL_ROOT_PASSWORD: 1886
       MYSQL_ROOT_HOST: '%'
     ports:
       - "3306:3306"

@@ -2,6 +2,7 @@ package com.example.doodle.controller;
 
 
 import com.example.doodle.dto.UserDTO;
+import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -48,27 +50,33 @@ public class UserController {
     }
 
     @GetMapping("/users/login")
-    public String getlogin(){
-        return "login";
+    public String getlogin(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userid = (String) session.getAttribute("userid");
+
+//        이미 로그인 된 상태면 home으로 redirect
+        if(userid==null){
+            throw new ApiRequestException("이미 로그인 된 상태입니다.");
+        }
+        else{
+            return "redirect:/home";
+        }
+
     }
 
     @PostMapping("/users/login")
-    public ModelAndView postlogin(@ModelAttribute UserDTO userDTO, HttpSession session){
-        String name = userService.loginCheck(userDTO, session);
+    public ModelAndView postlogin(@RequestParam String userid, @RequestParam String userpw_test, HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
 
-        //이미 로그인 된 경우 거르기
-        if(session.getAttribute("login")!=null){
-            log.info("로그인 되어 있음");
-            mv.setViewName("redirect:/home");
+        int isPassed = userService.loginCheck(userid, userpw_test);
+
+        if(isPassed==1) {//아이디와 비번 일치하는 경우
+            HttpSession session = request.getSession();
+            session.setAttribute("userid", userid);
+            mv.setViewName("redirect:/home"); //로그인 성공시 메인화면으로
+            log.info("로그인 성공");
         }
 
-        //로그인 성공 또는 실패하는 경우
-        if(name!=null){
-            log.info("로그인 성공");
-            session.setAttribute("login",userDTO );
-            mv.setViewName("redirect:/home"); //로그인 성공시 메인화면으로 (일단 home으로 해둠)
-        }
         else{
             log.info("로그인 실패");
             mv.setViewName("redirect:/users/login");
@@ -76,15 +84,10 @@ public class UserController {
         }
 
         return mv;
-
     }
 
     @GetMapping("/users/logout")
-    public String getlogout(HttpSession session){
-        if(session.getAttribute("login")==null){
-            log.info("로그인 된 상태 아님");
-            return "redirect:/home";
-        }
+    public String logout(HttpSession session){
         userService.logout(session);
         log.info("로그아웃 성공");
         return "redirect:/home";

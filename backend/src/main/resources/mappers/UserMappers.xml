@@ -14,6 +14,11 @@
         WHERE USERID = #{userid}
     </select>
 
+    <select id="getUserByNickname" parameterType="java.lang.String" resultType="com.example.doodle.dto.UserDTO">
+        SELECT * from users
+        WHERE nickname = #{nickname}
+    </select>
+
     <select id="findAll" resultType="java.util.HashMap">
         SELECT * FROM users
     </select>
@@ -48,5 +53,10 @@
         delete from users
         where userid = #{userid} and userpw = #{userpw}
     </delete>
+
+<!--아이디에 대응하는 비번 찾기-->
+    <select id="getUserpw">
+        select userpw from users where userid=#{userid}
+    </select>
 
 </mapper>

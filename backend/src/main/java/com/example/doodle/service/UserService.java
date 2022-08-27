@@ -1,6 +1,7 @@
 package com.example.doodle.service;
 
 import com.example.doodle.dto.UserDTO;
+import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,12 @@ public class UserService {
     UserMapper userMapper;
 
     public void createUser(UserDTO userDTO) {
+        if(userMapper.getUserById(userDTO.getUserid())!=null){
+            throw new ApiRequestException("이미 존재하는 ID입니다.");
+        }
+        if(userMapper.getUserByNickname(userDTO.getNickname())!=null){
+            throw new ApiRequestException("이미 존재하는 닉네임입니다.");
+        }
         userMapper.createUser(userDTO);
     }
 
@@ -26,15 +33,11 @@ public class UserService {
         return userDTO.getUsername();
     }
 
-    public String loginCheck(UserDTO userDTO, HttpSession session) {
+    public int loginCheck(String userid, String userpw_test) {
 
-        String name = userMapper.loginCheck(userDTO);
-        if (name != null) {
-            session.setAttribute("userid", userDTO.getUserid());
-            session.setAttribute("name",name);
-        } //null리턴..주의
-
-        return name;
+        String userpw = userMapper.getUserpw(userid);
+        int isPassed = userpw.equals(userpw_test)?1:0;
+        return isPassed;
     }
 
     public void logout(HttpSession session){

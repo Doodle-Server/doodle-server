@@ -35,21 +35,10 @@
         where clgid=#{clgid}
         group by userid, clgid;
     </select>
-    <select id="getClgByCateId" resultType="com.example..dto.ClgDTO">
+    <select id="getClgByCateId" resultType="com.example.doodle.dto.ClgDTO">
         select *
         from challenges
         where clgCateId=#{clgCateId}
-    </select>
-    <select id="getClgRecord" resultType="Float">
-        select count(case when done=true then 1 end)/count(done)*100 as clgAcheiveRate
-        from clg_log
-        where clgid=#{clgid}
-    </select>
-    <select id="getDailyClg" resultType="HashMap">
-        select c.clgid, c.clgname
-        from challenges as c join clg_members as m
-        on c.clgid = m.clgid
-        where userid=#{userid}
     </select>
     <update id="modifyClg" parameterType="com.example.doodle.dto.ClgDTO">
         update challenges

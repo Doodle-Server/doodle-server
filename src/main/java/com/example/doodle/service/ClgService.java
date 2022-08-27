@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -90,16 +89,6 @@ public class ClgService {
         return clgMapper.getClgByCateId(clgCateId);
     }
 
-    public Float getChallengeRecord(String clgid){
-        return clgMapper.getClgRecord(clgid);
-    }
-
-    public  List<HashMap<String, String>> getDailyChallenge(String userid, Date date){
-        List<HashMap<String, String>> myClg = clgMapper.getDailyClg(userid, date);
-        myClg.stream().filter(e-> clgMapper.getClgById(e.get("clgid")).getEnd_date().after(date)).collect(Collectors.toList());
-        log.info(String.valueOf(myClg));
-        return myClg;
-    }
     public static void quickSort(List<AcheiveDTO> list, int start, int end){
         int pivot = start;
         int left = start+1;

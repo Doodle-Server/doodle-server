@@ -32,9 +32,5 @@ public interface ClgMapper {
 
     List<ClgDTO> getClgByCateId(String clgCateId);
 
-    Float getClgRecord(String clgdid);
-
-    List<HashMap<String, String>> getDailyClg(String userid, Date date);
-
 
 }

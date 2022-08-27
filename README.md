@@ -1,7 +1,7 @@
 # doodle-server
 일일 챌린지
 
-#실행 명령어
+# 실행 명령어
 ```
 $ ./gradlew bootJar
 ```

@@ -1,14 +1,12 @@
 package com.example.doodle.controller;
 
-import com.example.doodle.dto.AcheiveDTO;
-import com.example.doodle.dto.ClgDTO;
-import com.example.doodle.dto.UserDTO;
-import com.example.doodle.dto.UserSimpleDTO;
+import com.example.doodle.dto.*;
 import com.example.doodle.service.ClgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -54,14 +52,21 @@ public class ClgController {
     }
 
     //오늘의 챌린지 조회
-    @GetMapping("/challenges/list/{userid}")
-    public List<ClgDTO> getDailyChallenges(@PathVariable String userid){
+    @GetMapping("/challenges/today/{userid}")
+    public List<ClgDTO> getTodayChallenges(@PathVariable String userid){
         LocalDate localDate = LocalDate.now();
         Date date = java.sql.Date.valueOf(String.valueOf(localDate));
-        log.info(String.valueOf(clgService.getClgAll(userid)));
-        List<ClgDTO> clgAll = clgService.getClgAll(userid).stream().filter(e->e.getEnd_date().after(date)).collect(Collectors.toList());
-//      log.info(String.valueOf(clgAll));
-        return clgAll;
+        List<ClgDTO> clgAll = clgService.getClgAll(userid);
+        return clgService.getDailyChallenges(clgAll,date);
+
+    }
+
+    //날짜별 챌린지 조회
+    @GetMapping("/challenges/date/{userid}")
+    public List<ClgDTO> getDailyChallenge(@PathVariable String userid, @RequestParam("date")
+    @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
+        List<ClgDTO> clgAll = clgService.getClgAll(userid);
+        return clgService.getDailyChallenges(clgAll,date);
 
     }
 
@@ -98,6 +103,16 @@ public class ClgController {
         return clgService.getClgByCateId(clgCateId);
     }
 
+    //일별 유저별 달성여부 조회
+    @GetMapping("/challenges/{clgid}/record")
+    public List<ClgAchieveDTO> getClgAchieve(@PathVariable String clgid){
+        return clgService.getClgAchieve(clgid);
+    }
 
+    //챌린지 색상 변경
+    @PatchMapping("/challenges/{clgid}/color")
+    public void changeClgColor(@PathVariable String clgid,  @RequestParam String userid, @RequestParam String color){
+        clgService.changeClgColor(clgid, userid, color);
+    }
 
 }

@@ -65,25 +65,21 @@ public class UserController {
     }
 
     @PostMapping("/users/login")
-    public ModelAndView postlogin(@RequestParam String userid, @RequestParam String userpw_test, HttpServletRequest request){
-        ModelAndView mv = new ModelAndView();
+    public void postlogin(@RequestParam String userid, @RequestParam String userpw_test, HttpServletRequest request){
 
         int isPassed = userService.loginCheck(userid, userpw_test);
 
         if(isPassed==1) {//아이디와 비번 일치하는 경우
             HttpSession session = request.getSession();
             session.setAttribute("userid", userid);
-            mv.setViewName("redirect:/home"); //로그인 성공시 메인화면으로
             log.info("로그인 성공");
         }
 
         else{
             log.info("로그인 실패");
-            mv.setViewName("redirect:/users/login");
-            mv.addObject("message", "error");
+
         }
 
-        return mv;
     }
 
     @GetMapping("/users/logout")

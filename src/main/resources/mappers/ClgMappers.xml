@@ -29,6 +29,11 @@
         on m.userid = u.userid
         where clgid=#{clgid}
     </select>
+    <select id="getManagerId">
+        select clgmanagerid
+        from challenges
+        where clgid=#{clgid}
+    </select>
     <select id="getAchieveRate" resultType="com.example.doodle.dto.AcheiveDTO">
         select  userid,count(case when done=true then 1 end)/ count(done)*100 as achieveRate
         from clg_log
@@ -40,13 +45,26 @@
         from challenges
         where clgCateId=#{clgCateId}
     </select>
+    <select id="getClgAchieve" resultType="com.example.doodle.dto.ClgAchieveDTO">
+        select userid,done,clg_date as clgDate
+        from clg_log
+        where clgid=#{clgid}
+    </select>
     <update id="modifyClg" parameterType="com.example.doodle.dto.ClgDTO">
         update challenges
         set clgname=#{clgname},clgmanagerid=#{clgmanagerid},clginfo=#{clginfo},clgmemberno=#{clgmemberno},clgCateId=#{clgCateId},end_date=#{end_date}
         where clgid=#{clgid}
     </update>
+    <update id="changeClgColor">
+        update clg_members
+        set color=#{color}
+        where clgid=#{clgid} and userid=#{userid}
+    </update>
     <delete id="deleteClg">
         delete from challenges where clgid=#{cldid}
+    </delete>
+    <delete id="deleteMemberInClg">
+        delete from clg_members where clgid=#{clgid}
     </delete>
     <delete id="removeMember">
         delete from clg_members where userid=#{userid} and clgid=#{clgid}

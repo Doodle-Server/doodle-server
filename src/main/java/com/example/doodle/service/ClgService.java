@@ -1,10 +1,7 @@
 package com.example.doodle.service;
 
 import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
-import com.example.doodle.dto.AcheiveDTO;
-import com.example.doodle.dto.ClgDTO;
-import com.example.doodle.dto.UserDTO;
-import com.example.doodle.dto.UserSimpleDTO;
+import com.example.doodle.dto.*;
 import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.mapper.ClgMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -32,6 +30,7 @@ public class ClgService {
 
     public void deleteClg(String clgid){
         clgMapper.deleteClg(clgid);
+        clgMapper.deleteMemberInClg(clgid);
     }
 
     public String getClgnameById(String clgid){
@@ -61,6 +60,11 @@ public class ClgService {
         return clgMapper.findAll(userid);
     }
 
+    public List<ClgDTO> getDailyChallenges(List<ClgDTO> clgAll, Date date){
+        List<ClgDTO> dailyClgs = clgAll.stream().filter(e->e.getEnd_date().after(date)).collect(Collectors.toList());
+        return dailyClgs;
+    }
+
     public void joinChallenge(String userid, String clgid){
         if(clgMapper.findMemberById(userid, clgid)!=null){
             throw new ApiRequestException("이미 가입한 챌린지입니다.");
@@ -70,7 +74,13 @@ public class ClgService {
     }
 
     public void quitChallenge(String userid, String clgid){
+        //챌린지 탈퇴하려는 사람이 매니저인 경우 챌린지 자체를 삭제하고 챌린지 멤버들도 탈퇴처리
+        if(clgMapper.getManagerId(clgid).equals(userid)){
+            clgMapper.deleteClg(clgid);
+            clgMapper.deleteMemberInClg(clgid);
+        }
         clgMapper.removeMember(userid, clgid);
+
     }
 
     public List<UserDTO> getClgMembers(String clgid){
@@ -87,6 +97,14 @@ public class ClgService {
 
     public List<ClgDTO> getClgByCateId(String clgCateId){
         return clgMapper.getClgByCateId(clgCateId);
+    }
+
+    public List<ClgAchieveDTO> getClgAchieve(String clgid){
+        return clgMapper.getClgAchieve(clgid);
+    }
+
+    public void changeClgColor(String clgid, String userid, String color){
+        clgMapper.changeClgColor(clgid, userid, color);
     }
 
     public static void quickSort(List<AcheiveDTO> list, int start, int end){

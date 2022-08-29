@@ -1,9 +1,6 @@
 package com.example.doodle.mapper;
 
-import com.example.doodle.dto.AcheiveDTO;
-import com.example.doodle.dto.ClgDTO;
-import com.example.doodle.dto.UserDTO;
-import com.example.doodle.dto.UserSimpleDTO;
+import com.example.doodle.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.*;
@@ -16,10 +13,13 @@ public interface ClgMapper {
 
     void deleteClg(String clgid);
 
+    void deleteMemberInClg(String clgid);
+
     void modifyClg(ClgDTO clgDTO);
 
     ClgDTO getClgById(String clgid);
 
+    String getManagerId(String clgid);
     String findMemberById(String userid, String clgid);
 
     List<ClgDTO> findAll(String userid);
@@ -31,6 +31,10 @@ public interface ClgMapper {
     List<AcheiveDTO> getAchieveRate(String cldid);
 
     List<ClgDTO> getClgByCateId(String clgCateId);
+
+    List<ClgAchieveDTO> getClgAchieve(String clgid);
+
+    void changeClgColor(String clgid, String userid, String color);
 
 
 }

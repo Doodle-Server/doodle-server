@@ -17,5 +17,9 @@
         delete from friends
         where relatingUserID=#{relatingUserID} and relatedUserID=#{relatedUserID}
     </delete>
-
+    <select id="getFriendLists" resultType="com.example.doodle.dto.FriendDTO">
+        select *
+        from friends
+        where relatingUserID=#{userid} and relationType=1
+    </select>
 </mapper>

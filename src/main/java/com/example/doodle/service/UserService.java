@@ -65,6 +65,7 @@ public class UserService {
         return userMapper.findPwCheck(userDTO);
     }
 
+    //임시 비밀번호 생성
     private boolean lowerCheck;
     private int size;
     private String init(){
@@ -94,7 +95,7 @@ public class UserService {
 
     public String findPw(String email,String userId)throws Exception{
 
-        // 임시 비밀번호는 6자리 발급
+        // 임시 비밀번호 6자리 발급
         String tempPw = getKey(false, 6);
 
         String userPw = tempPw;
@@ -113,9 +114,11 @@ public class UserService {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
 
+        //비밀 번호 틀리는 등 탈퇴 실패시
         if(userMapper.deleteUser(userDTO) != 1) {
-            out.println("alert('회원탈퇴 실패');");
+            out.println("회원탈퇴 실패");
             out.close();
+
             return false;
         } else {
             return true;

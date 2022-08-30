@@ -35,6 +35,11 @@
         where email = #{email}
     </select>
 
+    <!-- 아이디 유효성 체크 -->
+    <select id="findIdCheck" resultType="int">
+        select count(*) from users where email = #{email}
+    </select>
+
     <!-- 임시 비밀번호 발급 -->
     <update id="findPw" >
         update users

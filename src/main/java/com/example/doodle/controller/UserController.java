@@ -105,25 +105,23 @@ public class UserController {
         return "redirect:/findId";
     }
 
-    @RequestMapping(value="/findPw" , method=RequestMethod.GET)
+    /*@RequestMapping(value="/findPw" , method=RequestMethod.GET)
     public String findPwView() throws Exception{
         return"/users/findPwView";
-    }
+    }*/
 
     @RequestMapping(value="/findPw", method=RequestMethod.POST)
-    public String findPw(UserDTO userDTO,Model model) throws Exception{
+    public void findPw(UserDTO userDTO,Model model) throws Exception{
         log.info("memberPw"+userDTO.getUserid());
 
+        //아이디+이메일 맞는지 확인
         if(userService.findPwCheck(userDTO)==0) {
             log.info("pwCheck");
             model.addAttribute("msg", "아이디와 이메일을 확인해주세요");
-
-            return "/users/findPwView";
-        }else {
+        } else {
             userService.findPw(userDTO.getEmail(),userDTO.getUserid());
             model.addAttribute("member", userDTO.getEmail());
 
-            return "/users/findPw";
         }
     }
 
@@ -131,6 +129,7 @@ public class UserController {
     public String getDeleteForm(){
         return "delete_form";
     }
+
     @RequestMapping(value = "/users/deleteUser", method = RequestMethod.POST)
     public String delete_form(@ModelAttribute UserDTO userDTO, HttpSession session, HttpServletResponse response) throws Exception{
         if(userService.deleteUser(userDTO, response)) {

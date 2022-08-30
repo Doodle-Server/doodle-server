@@ -9,8 +9,11 @@ import java.util.Date;
 @Setter
 public class FriendDTO {
     private String relatingUserID;
+
     private String relatedUserID;
+
     private int relationType;
+
     private Date acceptDate;
 
 }

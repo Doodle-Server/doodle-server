@@ -25,10 +25,13 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.slf4j:slf4j-api:1.7.35'
 
 	//mysql
 	implementation 'mysql:mysql-connector-java'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.1.2.Final', ext: 'pom'
 
 	// MyBatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
@@ -37,11 +40,22 @@ dependencies {
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
 	implementation 'javax.servlet:jstl'
 
+	// QueryDSL
+	implementation "com.querydsl:querydsl-jpa:5.0.0"
+	annotationProcessor(
+			"javax.persistence:javax.persistence-api",
+			"javax.annotation:javax.annotation-api",
+			"com.querydsl:querydsl-apt:5.0.0:jpa")
 
+}
 
-
-
-
+// QueryDSL
+sourceSets {
+	main {
+		java {
+			srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+		}
+	}
 }
 
 tasks.named('test') {

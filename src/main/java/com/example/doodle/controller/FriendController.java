@@ -4,6 +4,7 @@ import com.example.doodle.dto.FriendDTO;
 import com.example.doodle.service.FriendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,16 @@ import java.util.List;
 public class FriendController {
     @Autowired
     FriendService friendService;
+
+    @PostMapping("/friends/{relatedUserID}")
+    public void followUser(@PathVariable String relatingUserID, @PathVariable String relatedUserID, Authentication authentication) {
+        friendService.requestFriend(relatingUserID, relatedUserID);
+    }
+
+    @DeleteMapping("/friends/{relatedUserID}")
+    public void unfollowUser(@PathVariable String relatingUserID, @PathVariable String relatedUserID, Authentication authentication){
+        friendService.deleteFriend(relatingUserID, relatedUserID);
+    }
 
     @GetMapping("/users/{userid}/friends/request")
     public List<FriendDTO> getFriendRequests(@PathVariable String userid){

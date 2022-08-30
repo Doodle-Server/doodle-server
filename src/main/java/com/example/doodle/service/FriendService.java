@@ -14,6 +14,15 @@ public class FriendService {
     @Autowired
     FriendMapper friendMapper;
 
+
+    public void requestFriend(String relatingUserID, String relatedUserID) {
+        friendMapper.requestFriend(relatingUserID, relatedUserID, 0);
+    }
+
+    public void deleteFriend(String relatingUserID, String relatedUserID) {
+        friendMapper.deleteFriend(relatingUserID, relatedUserID);
+    }
+
     public List<FriendDTO> getFriendRequests(String userid){
         return friendMapper.getFriendRequests(userid);
     }
@@ -26,7 +35,8 @@ public class FriendService {
         friendMapper.rejectFriendRequest(relatingUserID, relatedUserID);
     }
 
-    public List<FriendDTO> getFriendLists(String userid){
+    public List<FriendDTO> getFriendLists(String userid) {
         return friendMapper.getFriendLists(userid);
     }
+
 }

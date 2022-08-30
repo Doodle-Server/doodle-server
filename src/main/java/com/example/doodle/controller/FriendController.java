@@ -19,13 +19,13 @@ public class FriendController {
     @Autowired
     FriendService friendService;
 
-    @PostMapping("/friends/{relatedUserID}")
-    public void followUser(@PathVariable String relatingUserID, @PathVariable String relatedUserID, Authentication authentication) {
+    @PostMapping("/users/{relatingUserID}/friends/{relatedUserID}/request")
+    public void followUser(@PathVariable String relatingUserID, @PathVariable String relatedUserID) {
         friendService.requestFriend(relatingUserID, relatedUserID);
     }
 
-    @DeleteMapping("/friends/{relatedUserID}")
-    public void unfollowUser(@PathVariable String relatingUserID, @PathVariable String relatedUserID, Authentication authentication){
+    @DeleteMapping("/users/{relatingUserID}/friends/{relatedUserID}/delete")
+    public void unfollowUser(@PathVariable String relatingUserID, @PathVariable String relatedUserID){
         friendService.deleteFriend(relatingUserID, relatedUserID);
     }
 
@@ -34,7 +34,7 @@ public class FriendController {
         return friendService.getFriendRequests(userid);
     }
 
-    @PostMapping("/users/{relatedUserID}/friends/{relatingUserID}")
+    @PostMapping("/users/{relatedUserID}/friends/{relatingUserID}") //수정
     public void acceptFriendRequest(@PathVariable String relatingUserID, @PathVariable String relatedUserID){
         friendService.acceptFriendRequest(relatingUserID, relatedUserID);
     }

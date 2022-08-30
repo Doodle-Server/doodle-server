@@ -16,7 +16,7 @@ public class FriendService {
 
 
     public void requestFriend(String relatingUserID, String relatedUserID) {
-        friendMapper.requestFriend(relatingUserID, relatedUserID, 0);
+        friendMapper.requestFriend(relatingUserID, relatedUserID);
     }
 
     public void deleteFriend(String relatingUserID, String relatedUserID) {

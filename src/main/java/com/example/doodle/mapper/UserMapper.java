@@ -18,10 +18,11 @@ public interface UserMapper {
     String findId(String email);
     int findPwCheck(UserDTO userDTO);
     String findPw(String email,String userid, String userpw);
-    int deleteUser(UserDTO userDTO);
+    int deleteUser(String userid);
 
     String getUserpw(String userid);
 
     UserDTO getProfileById(String userid);
+
     void editUserProfile(UserDTO userDTO);
 }

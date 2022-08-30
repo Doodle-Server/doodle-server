@@ -2,6 +2,7 @@ package com.example.doodle.mapper;
 
 import com.example.doodle.dto.FriendDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -9,14 +10,14 @@ import java.util.List;
 public interface FriendMapper {
     List<FriendDTO> getFriendRequests(String userid);
 
-    void requestFriend(String relatingUserID, String relatedUserID, int type);
+    void requestFriend(@Param("relatingUserID")String relatingUserID, @Param("relatedUserID")String relatedUserID);
 
-    void acceptFriendRequest(String relatingUserID, String relatedUserID);
+    void acceptFriendRequest(@Param("relatingUserID") String relatingUserID, @Param("relatedUserID") String relatedUserID);
 
-    void rejectFriendRequest(String relatingUserID, String relatedUserID);
+    void rejectFriendRequest(@Param("relatingUserID") String relatingUserID,@Param("relatedUserID") String relatedUserID);
 
     List<FriendDTO> getFriendLists(String userid);
 
-    void deleteFriend(String relatingUserID, String relatedUserID);
+    void deleteFriend(@Param("relatingUserID")String relatingUserID, @Param("relatedUserID")String relatedUserID);
 
 }

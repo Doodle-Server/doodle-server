@@ -53,31 +53,26 @@
         where email = #{email} and userid=#{userid}
     </select>
 
-    <!-- 친구 신청 -->
-    <insert id="requestFriend">
-        insert into friends
-        VALUES (#{userid}, #{userid})
-    </insert>
-
-    <!-- 친구 신청 목록 조회 -->
-    <select id="requestList" resultMap="java.util.HashMap">
-        SELECT 
-        FROM friends
-    </select>
-    <!-- 친구 목록 조회 -->
-
-    <!-- 친구 삭제 -->
-
-
     <!-- 회원 탈퇴 -->
-    <delete id="deleteUser" parameterType="com.example.doodle.dto.UserDTO">
+    <delete id="deleteUser" parameterType="string">
         delete from users
-        where userid = #{userid} and userpw = #{userpw}
+        where userid = #{userid}
     </delete>
 
 <!--아이디에 대응하는 비번 찾기-->
-    <select id="getUserpw">
+    <select id="getUserpw" resultType="string">
         select userpw from users where userid=#{userid}
     </select>
 
+    <select id="getProfileById" parameterType="com.example.doodle.dto.UserDTO" resultType="com.example.doodle.dto.UserDTO">
+        select *
+        from users
+        where userid = #{userid}
+    </select>
+
+    <update id="editUserProfile">
+        update users
+        set username = #{username}, nickname = #{nickname}, email = #{email}, userpw = #{userpw}
+        where userid = #{userid}
+    </update>
 </mapper>

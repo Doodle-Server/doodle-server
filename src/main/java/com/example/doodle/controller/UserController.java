@@ -2,6 +2,7 @@ package com.example.doodle.controller;
 
 
 import com.example.doodle.dto.FriendDTO;
+import com.example.doodle.dto.UserCheckDTO;
 import com.example.doodle.dto.UserDTO;
 import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.service.UserService;
@@ -28,15 +29,15 @@ public class UserController {
     UserService userService;
 
 
-    @GetMapping("/home")
-    public String home(){
-        return "home";
-    }
-    @RequestMapping(value = "/users/signup", method = RequestMethod.GET)
-    public ModelAndView getsignup() {
-
-        return new ModelAndView("signup");
-    }
+//    @GetMapping("/home")
+//    public String home(){
+//        return "home";
+//    }
+//    @RequestMapping(value = "/users/signup", method = RequestMethod.GET)
+//    public ModelAndView getsignup() {
+//
+//        return new ModelAndView("signup");
+//    }
 
     @RequestMapping(value = "/users/signup", method = RequestMethod.POST)
     public String postsignup(@ModelAttribute UserDTO userDTO){
@@ -45,12 +46,7 @@ public class UserController {
         return "signup";
     }
 
-    @GetMapping("getUsernameById.do")
-    @ResponseBody
-    public String getUsernameById(@RequestParam String userid) {
 
-        return userService.getUsernameById(userid);
-    }
 
     @GetMapping("/users/login")
     public String getlogin(HttpServletRequest request){
@@ -92,11 +88,7 @@ public class UserController {
         return "redirect:/home";
     }
 
-    // 아이디 찾기 폼으로 이동
-    @RequestMapping(value = "/users/find_id_form")
-    public String find_id_form() throws Exception{
-        return "find_id_form";
-    }
+
 
     //아이디 찾기
     @RequestMapping(value = "/findId", method = RequestMethod.POST)
@@ -125,33 +117,15 @@ public class UserController {
         }
     }
 
-    @GetMapping("/users/deleteUser")
-    public String getDeleteForm(){
-        return "delete_form";
-    }
 
-    @RequestMapping(value = "/users/deleteUser", method = RequestMethod.POST)
-    public String delete_form(@ModelAttribute UserDTO userDTO, HttpSession session, HttpServletResponse response) throws Exception{
-        if(userService.deleteUser(userDTO, response)) {
+    @DeleteMapping( "/users/deleteUser")
+    public void delete_form(@RequestBody UserCheckDTO userCheckDTO, HttpSession session, HttpServletResponse response) throws Exception{
+        if(userService.deleteUser(userCheckDTO.getUserid(),userCheckDTO.getUserpw_test(), response)) {
             session.invalidate();
         }
-        return "redirect:/home";
+//        return "redirect:/home";
     }
 
-    //내정보 보기
-    @GetMapping("/users/{userId}")
-    public UserDTO getUserProfile(@PathVariable String userid){
 
-        return userService.getUserProfile(userid);
-    }
-
-    //회원정보 수정
-    @PostMapping("/users/{userId}/edit")
-    public String editUserProfile(@PathVariable String userid){
-        UserDTO userProfile = userService.getUserProfile(userid);
-        userService.editUserProfile(userProfile);
-
-        return "redirect:/getUserProfile";
-    }
 
 }

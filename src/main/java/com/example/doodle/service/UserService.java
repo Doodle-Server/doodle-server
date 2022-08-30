@@ -35,9 +35,7 @@ public class UserService {
 
     public int loginCheck(String userid, String userpw_test) {
 
-        String userpw = userMapper.getUserpw(userid);
-        int isPassed = userpw.equals(userpw_test)?1:0;
-        return isPassed;
+        return isPassed(userid, userpw_test);
     }
 
     public void logout(HttpSession session){
@@ -110,17 +108,17 @@ public class UserService {
     }
 
     // 회원탈퇴
-    public boolean deleteUser(UserDTO userDTO, HttpServletResponse response) throws Exception {
+    public boolean deleteUser(String userid, String userpw_test, HttpServletResponse response) throws Exception {
         response.setContentType("text/html;charset=utf-8");
         PrintWriter out = response.getWriter();
 
         //비밀 번호 틀리는 등 탈퇴 실패시
-        if(userMapper.deleteUser(userDTO) != 1) {
+        if(isPassed(userid,userpw_test)==0) {
             out.println("회원탈퇴 실패");
             out.close();
-
             return false;
         } else {
+            userMapper.deleteUser(userid);
             return true;
         }
     }
@@ -133,6 +131,12 @@ public class UserService {
     //정보 수정
     public void editUserProfile(UserDTO userDTO) {
         userMapper.editUserProfile(userDTO);
+    }
+
+    public int isPassed(String userid, String userpw_test){
+        String userpw = userMapper.getUserpw(userid);
+        int isPassed = userpw.equals(userpw_test)?1:0;
+        return isPassed;
     }
 }
 

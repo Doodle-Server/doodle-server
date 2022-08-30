@@ -25,4 +25,8 @@ public class FriendService {
     public void rejectFriendRequest(String relatingUserID, String relatedUserID){
         friendMapper.rejectFriendRequest(relatingUserID, relatedUserID);
     }
+
+    public List<FriendDTO> getFriendLists(String userid){
+        return friendMapper.getFriendLists(userid);
+    }
 }

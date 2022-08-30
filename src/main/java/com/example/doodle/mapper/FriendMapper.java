@@ -12,4 +12,6 @@ public interface FriendMapper {
     void acceptFriendRequest(String relatingUserID, String relatedUserID);
 
     void rejectFriendRequest(String relatingUserID, String relatedUserID);
+
+    List<FriendDTO> getFriendLists(String userid);
 }

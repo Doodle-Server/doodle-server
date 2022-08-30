@@ -33,4 +33,9 @@ public class FriendController {
         friendService.rejectFriendRequest(relatingUserID, relatedUserID);
     }
 
+    @GetMapping("/users/{userid}/friends")
+    public List<FriendDTO> getFriendLists(@PathVariable String userid){
+        return friendService.getFriendLists(userid);
+    }
+
 }

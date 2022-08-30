@@ -42,6 +42,7 @@ public class UserController {
         return "signup";
     }
 
+    //내 정보 보기
     @GetMapping("getUsernameById.do")
     @ResponseBody
     public String getUsernameById(@RequestParam String userid) {

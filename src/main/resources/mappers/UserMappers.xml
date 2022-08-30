@@ -44,4 +44,9 @@
         select userpw from users where userid=#{userid}
     </select>
 
+    <select id="getProfileById" parameterType="com.example.doodle.dto.UserDTO">
+        select *
+        from users
+        where userid = #{userid}
+    </select>
 </mapper>

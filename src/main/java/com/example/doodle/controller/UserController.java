@@ -1,11 +1,13 @@
 package com.example.doodle.controller;
 
 
+import com.example.doodle.dto.FriendDTO;
 import com.example.doodle.dto.UserDTO;
 import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller
@@ -42,7 +45,6 @@ public class UserController {
         return "signup";
     }
 
-    //내 정보 보기
     @GetMapping("getUsernameById.do")
     @ResponseBody
     public String getUsernameById(@RequestParam String userid) {
@@ -114,5 +116,18 @@ public class UserController {
         }
         return "redirect:/home";
     }
+
+    //내정보 보기
+    @GetMapping("/users/{userId}")
+    public UserDTO getUserProfile(@PathVariable String userid){
+
+        return userService.getUserProfile(userid);
+    }
+
+//    //회원정보 수정
+//    @GetMapping("/users/{userId}/edit")
+//    public String editUserProfile(@PathVariable String userId){
+//        UserDTO userProfile =
+//    }
 
 }

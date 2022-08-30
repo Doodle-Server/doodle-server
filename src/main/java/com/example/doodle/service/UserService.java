@@ -73,6 +73,22 @@ public class UserService {
             return true;
         }
     }
+
+    //내정보 보기
+    public UserDTO getUserProfile(String userid) {
+        UserDTO userProfile = userMapper.getProfileById(userid);
+        return userProfile;
+    }
+    //정보 수정
+    public void editUserProfile(UserDTO userDTO) {
+        if(userMapper.getUserById(userDTO.getUserid())!=null){
+            throw new ApiRequestException("이미 존재하는 ID입니다.");
+        }
+        if(userMapper.getUserByNickname(userDTO.getNickname())!=null){
+            throw new ApiRequestException("이미 존재하는 닉네임입니다.");
+        }
+        userMapper.createUser(userDTO);
+    }
 }
 
 

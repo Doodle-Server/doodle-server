@@ -20,4 +20,6 @@ public interface UserMapper {
     int deleteUser(UserDTO userDTO);
 
     String getUserpw(String userid);
+
+    UserDTO getProfileById(String userid);
 }

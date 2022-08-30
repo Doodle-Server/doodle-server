@@ -69,4 +69,10 @@
         from users
         where userid = #{userid}
     </select>
+
+    <update id="editUserProfile">
+        update users
+        set (#{username},#{nickname},#{email},#{userpw})
+        where userid = #{userid}
+    </update>
 </mapper>

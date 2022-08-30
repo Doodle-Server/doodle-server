@@ -145,10 +145,13 @@ public class UserController {
         return userService.getUserProfile(userid);
     }
 
-//    //회원정보 수정
-//    @GetMapping("/users/{userId}/edit")
-//    public String editUserProfile(@PathVariable String userId){
-//        UserDTO userProfile =
-//    }
+    //회원정보 수정
+    @PostMapping("/users/{userId}/edit")
+    public String editUserProfile(@PathVariable String userid){
+        UserDTO userProfile = userService.getUserProfile(userid);
+        userService.editUserProfile(userProfile);
+
+        return "redirect:/getUserProfile";
+    }
 
 }

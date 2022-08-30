@@ -23,4 +23,5 @@ public interface UserMapper {
     String getUserpw(String userid);
 
     UserDTO getProfileById(String userid);
+    void editUserProfile(UserDTO userDTO);
 }

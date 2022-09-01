@@ -7,6 +7,7 @@ import com.example.doodle.mapper.ClgMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,6 +75,10 @@ public class ClgService {
     }
 
     public void quitChallenge(String userid, String clgid){
+        if(ObjectUtils.isEmpty(clgMapper.getClgById(userid))){
+            throw new ApiRequestException("가입하지 않은 챌린지입니다.");
+        }
+
         //챌린지 탈퇴하려는 사람이 매니저인 경우 챌린지 자체를 삭제하고 챌린지 멤버들도 탈퇴처리
         if(clgMapper.getManagerId(clgid).equals(userid)){
             clgMapper.deleteClg(clgid);
@@ -96,10 +101,14 @@ public class ClgService {
     }
 
     public List<ClgDTO> getClgByCateId(String clgCateId){
+
         return clgMapper.getClgByCateId(clgCateId);
     }
 
     public List<ClgAchieveDTO> getClgAchieve(String clgid){
+        if(ObjectUtils.isEmpty(clgMapper.getClgById(clgid))){
+            throw new ApiRequestException("존재하지 않는 챌린지 아이디입니다");
+        }
         return clgMapper.getClgAchieve(clgid);
     }
 

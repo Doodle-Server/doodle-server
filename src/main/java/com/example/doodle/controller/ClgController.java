@@ -1,6 +1,7 @@
 package com.example.doodle.controller;
 
 import com.example.doodle.dto.*;
+import com.example.doodle.exception.ApiRequestException;
 import com.example.doodle.service.ClgService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,9 @@ public class ClgController {
     //챌린지 생성
     @PostMapping("/challenges")
     public void postChallenge(@RequestBody ClgDTO clgDTO){
+        if(clgService.getChallengeInfo(clgDTO.getClgid())!=null){
+            throw new ApiRequestException("이미 존재하는 챌린지 아이디입니다.");
+        }
         clgService.createClg(clgDTO);
 //      log.info(clgDTO.getClgid());
 
@@ -54,6 +58,9 @@ public class ClgController {
     //오늘의 챌린지 조회
     @GetMapping("/challenges/today/{userid}")
     public List<ClgDTO> getTodayChallenges(@PathVariable String userid){
+        if(clgService.getClgnameById(userid).length()==0){
+            throw new ApiRequestException("존재하지 않는 아이디입니다.");
+        }
         LocalDate localDate = LocalDate.now();
         Date date = java.sql.Date.valueOf(String.valueOf(localDate));
         List<ClgDTO> clgAll = clgService.getClgAll(userid);
